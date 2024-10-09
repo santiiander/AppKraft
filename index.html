@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Origami y Papercraft</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Resources/Logo.png" alt="LogoTienda" class="logo-img">
+                <span>Diseños En PapelKraft</span>
+            </div>
+            <div class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Packs de Origami y Papercraft</h1>
+        <div class="products">
+            <div class="product">
+                <h2>Pack Animales</h2>
+                <div class="product-images">
+                    <img src="/placeholder.svg?height=120&width=120&text=Animal 1" alt="Animal Origami 1">
+                    <img src="/placeholder.svg?height=120&width=120&text=Animal 2" alt="Animal Origami 2">
+                    <img src="/placeholder.svg?height=120&width=120&text=Animal 3" alt="Animal Origami 3">
+                    <img src="/placeholder.svg?height=120&width=120&text=Animal 4" alt="Animal Origami 4">
+                    <img src="/placeholder.svg?height=120&width=120&text=Animal 5" alt="Animal Origami 5">
+                </div>
+                <p>Este pack incluye 10 diseños de animales en origami, perfectos para principiantes y expertos.</p>
+                <button class="view-more">Ver más</button>
+                <button class="add-to-cart">Agregar al pedido</button>
+            </div>
+            <div class="product">
+                <h2>Pack Flores</h2>
+                <div class="product-images">
+                    <img src="/placeholder.svg?height=120&width=120&text=Flor 1" alt="Flor Origami 1">
+                    <img src="/placeholder.svg?height=120&width=120&text=Flor 2" alt="Flor Origami 2">
+                    <img src="/placeholder.svg?height=120&width=120&text=Flor 3" alt="Flor Origami 3">
+                    <img src="/placeholder.svg?height=120&width=120&text=Flor 4" alt="Flor Origami 4">
+                    <img src="/placeholder.svg?height=120&width=120&text=Flor 5" alt="Flor Origami 5">
+                </div>
+                <p>Descubre la belleza de la naturaleza con nuestro pack de 8 diseños de flores en papercraft.</p>
+                <button class="view-more">Ver más</button>
+                <button class="add-to-cart">Agregar al pedido</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h2>Tu Carrito</h2>
+            <ul id="cart-items"></ul>
+            <button id="whatsapp-button">Consultar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
