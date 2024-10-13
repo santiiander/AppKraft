@@ -70,7 +70,8 @@ function displayProducts(products) {
             <h2>${product.Nombrepack}</h2>
             <div class="product-images">
                 ${[1, 2, 3, 4, 5].map(num => `
-                    <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" onerror="this.src='/placeholder.svg?height=120&width=120&text=Image Not Found';">
+                    <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" 
+                         onerror="this.src='/placeholder.svg?height=120&width=120&text=Image Not Found';">
                 `).join('')}
             </div>
             <p>${product.DescirpcionPack}</p>
@@ -79,7 +80,7 @@ function displayProducts(products) {
                 <span class="amount usd">${product.PrecioUSD}</span> <span class="currency usd">USD</span>
             </div>
             <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver todo el contenido del pack!</button>
-            <button class="add-to-cart">Agregar al pedido</button>
+            <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al pedido</button>
         </div>
     `).join('');
 
@@ -93,10 +94,8 @@ function attachEventListeners() {
 
     addToCartButtons.forEach((button) => {
         button.addEventListener('click', () => {
-            const product = button.closest('.megapack');
-            const productName = product.querySelector('h2').textContent;
-            const productPrice = product.querySelector('.amount.pe').textContent;
-            addToCart(productName, productPrice);
+            const product = JSON.parse(button.getAttribute('data-product'));
+            addToCart(product);
             
             button.classList.add('added');
             setTimeout(() => {
@@ -124,15 +123,20 @@ function attachEventListeners() {
     });
 }
 
-function addToCart(productName, productPrice) {
-    cart.push({ name: productName, price: productPrice });
+function addToCart(product) {
+    const existingItem = cart.find(item => item.Nombrepack === product.Nombrepack);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
     updateCartCount();
-    showNotification(`${productName} added to cart!`);
+    showNotification(`${product.Nombrepack} agregado al carrito!`);
 }
 
 function updateCartCount() {
     const cartCount = document.getElementById('cart-count');
-    cartCount.textContent = cart.length;
+    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
     
     cartCount.classList.add('pulse');
     setTimeout(() => {
@@ -142,29 +146,50 @@ function updateCartCount() {
 
 function updateCartDisplay() {
     const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
     cartItems.innerHTML = '';
+    let total = 0;
+
     if (cart.length === 0) {
-        cartItems.innerHTML = '<li>Your cart is empty</li>';
+        cartItems.innerHTML = '<li>Tu carrito está vacío</li>';
+        cartTotal.textContent = '';
     } else {
         cart.forEach((item, index) => {
             const li = document.createElement('li');
-            li.textContent = `${item.name} - ${item.price}`;
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.classList.add('remove-item');
-            removeButton.addEventListener('click', () => removeFromCart(index));
-            
-            li.appendChild(removeButton);
+            const price = document.getElementById('country-select').value === 'peru' ? item.PrecioPE : item.PrecioUSD;
+            const itemTotal = price * item.quantity;
+            total += itemTotal;
+
+            li.innerHTML = `
+                <div>
+                    ${item.Nombrepack} - Cantidad: ${item.quantity} - Precio: ${price} - Total: ${itemTotal.toFixed(2)}
+                </div>
+                <button class="remove-item" data-index="${index}">Eliminar</button>
+            `;
             cartItems.appendChild(li);
         });
+
+        cartTotal.textContent = `Total del carrito: ${total.toFixed(2)} ${document.getElementById('country-select').value === 'peru' ? 'PEN' : 'USD'}`;
     }
+
+    attachRemoveItemListeners();
+}
+
+function attachRemoveItemListeners() {
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const index = button.getAttribute('data-index');
+            removeFromCart(index);
+        });
+    });
 }
 
 function removeFromCart(index) {
     const removedItem = cart.splice(index, 1)[0];
     updateCartCount();
     updateCartDisplay();
-    showNotification(`${removedItem.name} removed from cart!`);
+    showNotification(`${removedItem.Nombrepack} eliminado del carrito!`);
 }
 
 function openModal(modal) {
@@ -191,7 +216,7 @@ function closeModal(modal) {
 }
 
 function sendWhatsAppMessage() {
-    const message = encodeURIComponent(`Hello, I would like to inquire about the following products: ${cart.map(item => item.name).join(', ')}`);
+    const message = encodeURIComponent(`Hola, me gustaría consultar sobre los siguientes productos: ${cart.map(item => `${item.Nombrepack} (x${item.quantity})`).join(', ')}`);
     window.open(`https://wa.me/51908642311?text=${message}`, '_blank');
 }
 
@@ -229,4 +254,6 @@ function updatePrices() {
             usdElements.forEach(el => el.style.display = 'inline');
         }
     });
+
+    updateCartDisplay();
 }

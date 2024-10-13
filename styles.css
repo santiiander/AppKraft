@@ -165,7 +165,7 @@ h1:hover::after {
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -201,16 +201,14 @@ h1:hover::after {
 
 .product-images {
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
-  padding-bottom: 10px;
-  scroll-behavior: smooth;
 }
 
 .product-images img {
-  width: 120px;
-  height: 120px;
+  width: calc(20% - 0.8rem);
+  height: auto;
   object-fit: cover;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -348,16 +346,13 @@ button:hover {
   background-color: #20BD5A;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .products {
     grid-template-columns: 1fr;
   }
   
-  
-  
   .product-images img {
-    width: 100px;
-    height: 100px;
+    width: calc(33.33% - 0.67rem);
   }
   
   .logo span {
@@ -402,6 +397,14 @@ button:hover {
   100% { transform: scale(1); }
 }
 
+#cart-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
 .remove-item {
   margin-left: 10px;
   background-color: var(--accent-color);
@@ -411,6 +414,7 @@ button:hover {
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  flex-shrink: 0;
 }
 
 .remove-item:hover {
@@ -441,4 +445,10 @@ button:hover {
 
 #content-message a:hover {
   background-color: var(--secondary-color);
+}
+
+#cart-total {
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: right;
 }
