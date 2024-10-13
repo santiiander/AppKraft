@@ -65,13 +65,13 @@ function parseGoogleSheetData(data) {
 
 function displayProducts(products) {
     const productsContainer = document.getElementById('products');
-    productsContainer.innerHTML = products.map(product => `
+    productsContainer.innerHTML = products.map((product, index) => `
         <div class="product megapack">
             <h2>${product.Nombrepack}</h2>
             <div class="product-images">
-                ${['Imagen1', 'Imagen2', 'Imagen3', 'Imagen4', 'Imagen5']
-                    .map((imgKey, index) => product[imgKey] ? `<img src="${product[imgKey]}" alt="Figura Origami ${index + 1}" onerror="this.src='/placeholder.svg?height=120&width=120&text=Image Not Found';">` : '')
-                    .join('')}
+                ${[1, 2, 3, 4, 5].map(num => `
+                    <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" onerror="this.src='/placeholder.svg?height=120&width=120&text=Image Not Found';">
+                `).join('')}
             </div>
             <p>${product.DescirpcionPack}</p>
             <div class="price">
