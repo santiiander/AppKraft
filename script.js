@@ -69,6 +69,7 @@ function displayProducts(products) {
                             <div class="swiper-slide">
                                 <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" 
                                      onerror="this.onerror=null;this.src='Packs/MegaPack${index + 1}/${num}.png';"
+                                     onerror="this.onerror=null;this.src='Packs/MegaPack${index + 1}/${num}.webp';"
                                      onerror="this.src='/placeholder.svg?height=300&width=300&text=Image Not Found';">
                             </div>
                         `).join('')}
