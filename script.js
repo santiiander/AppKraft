@@ -65,9 +65,10 @@ function displayProducts(products) {
                 <h2>${product.Nombrepack}</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                        ${Array.from({ length: 15 }, (_, i) => i + 1).map(num => `
+                        ${Array.from({ length: 20 }, (_, i) => i + 1).map(num => `
                             <div class="swiper-slide">
                                 <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" 
+                                     onerror="this.onerror=null;this.src='Packs/MegaPack${index + 1}/${num}.png';"
                                      onerror="this.src='/placeholder.svg?height=300&width=300&text=Image Not Found';">
                             </div>
                         `).join('')}
@@ -84,7 +85,7 @@ function displayProducts(products) {
             </div>
             <div class="product-buttons">
                 <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver todo el contenido del pack!</button>
-                <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al pedido</button>
+                <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al carrito</button>
             </div>
         </div>
     `).join('');
@@ -94,14 +95,15 @@ function displayProducts(products) {
     updatePrices();
 }
 
+
 function initSwipers() {
     const swipers = document.querySelectorAll('.mySwiper');
     swipers.forEach(swiperElement => {
         new Swiper(swiperElement, {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+            slidesPerView: 4,
+            slidesPerGroup: 4,
             spaceBetween: 10,
-            loop: false,
+            loop: true,
             autoplay: {
                 delay: 5000,
                 disableOnInteraction: false,
@@ -114,6 +116,9 @@ function initSwipers() {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
+            effect: 'slide',
+            speed: 600,
+            cssMode: true,
         });
     });
 }
