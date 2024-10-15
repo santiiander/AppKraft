@@ -6,6 +6,7 @@
     <title>Tienda de Origami y Papercraft</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
 <body>
     <header>
@@ -27,47 +28,47 @@
         </nav>
     </header>
 
-    <main>
-        <h1>Packs de Origami y Papercraft</h1>
-        
-        <section class="general-info">
-            <div class="info-container">
-                <h2>INFORMACIÓN GENERAL PARA TODOS LOS MEGAPACK</h2>
-                <ul>
-                    <li>🤯 Único pago</li>
-                    <li>🖨 Plantillas imprimibles</li>
-                    <li>✅ Instrucciones detalladas</li>
-                    <li>👉 100% descargables</li>
-                    <li>👉 Actualizable sin costo alguno</li>
-                    <li>👉 Acceso a la plataforma de por vida por Google Drive</li>
-                </ul>
-                <h3>Sólo necesitas los siguientes materiales:</h3>
-                <ul>
-                    <li>📐 Papel A4/carta (bond, cartulina, etc.)</li>
-                    <li>📐 Impresora</li>
-                    <li>📐 Tijeras</li>
-                    <li>📐 Pegamento</li>
-                </ul>
-                <div class="offer">
-                    <p>💥🔥🚨 APROVECHA LA OFERTA DE LANZAMIENTO 🚨🔥💥</p>
+    <div class="content-wrapper">
+        <main>
+            <h1>Packs de Papercraft</h1>
+            
+            <section class="general-info">
+                <div class="info-container">
+                    <h2>INFORMACIÓN GENERAL PARA TODOS LOS MEGAPACK</h2>
+                    <ul>
+                        <li>🤯 Único pago</li>
+                        <li>🖨 Plantillas imprimibles</li>
+                        <li>✅ Instrucciones detalladas</li>
+                        <li>👉 100% descargables</li>
+                        <li>👉 Actualizable sin costo alguno</li>
+                        <li>👉 Acceso a la plataforma de por vida por Google Drive</li>
+                    </ul>
+                    <h3>Sólo necesitas los siguientes materiales:</h3>
+                    <ul>
+                        <li>📐 Papel A4/carta (bond, cartulina, etc.)</li>
+                        <li>📐 Impresora</li>
+                        <li>📐 Tijeras</li>
+                        <li>📐 Pegamento</li>
+                    </ul>
+                    <div class="offer">
+                        <p>💥🔥🚨 APROVECHA LA OFERTA DE LANZAMIENTO 🚨🔥💥</p>
+                    </div>
+                    <h3>Métodos de pago:</h3>
+                    <p>Yape, Plin, Interbank, BancoDeLaNación.</p>
                 </div>
-                <h3>Métodos de pago:</h3>
-                <p>Yape, Plin, Interbank, BancoDeLaNación.</p>
+            </section>
+
+            <div id="products" class="products">
+                <!-- Products will be dynamically inserted here -->
             </div>
-        </section>
+        </main>
 
-        <div id="products" class="products">
-            <!-- Products will be dynamically inserted here -->
-        </div>
-    </main>
-
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
+        <aside id="cart-aside" class="cart-aside">
             <h2>Tu Carrito</h2>
             <ul id="cart-items"></ul>
             <div id="cart-total"></div>
             <button id="whatsapp-button">Consultar</button>
-        </div>
+        </aside>
     </div>
 
     <div id="content-modal" class="modal">
@@ -78,6 +79,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -111,10 +111,16 @@ nav {
   transition: all 0.3s ease;
 }
 
-main {
+.content-wrapper {
+  display: flex;
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
+}
+
+main {
+  flex: 1;
+  margin-right: 2rem;
 }
 
 h1 {
@@ -151,6 +157,12 @@ h1:hover::after {
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.info-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .offer {
@@ -161,11 +173,34 @@ h1:hover::after {
   text-align: center;
   font-weight: bold;
   margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.offer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
 }
 
 .products {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
@@ -176,6 +211,7 @@ h1:hover::after {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   overflow: hidden;
+  animation: fadeIn 0.5s ease-out, float 5s ease-in-out infinite;
 }
 
 .product:hover {
@@ -199,34 +235,36 @@ h1:hover::after {
   margin-bottom: 1rem;
 }
 
-.product-images {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
+.swiper {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-images img {
-  width: calc(20% - 0.8rem);
+.swiper-slide img {
+  width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.product-images img:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  aspect-ratio: 4 / 3;
 }
 
 .price {
   font-size: 1.2rem;
   font-weight: bold;
   margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .currency {
   font-size: 0.8rem;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
 }
 
 button {
@@ -268,8 +306,8 @@ button:hover::after {
 
 button:hover {
   background-color: #229E8F;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .view-content {
@@ -278,6 +316,69 @@ button:hover {
 
 .view-content:hover {
   background-color: #E08C19;
+}
+
+.cart-aside {
+  width: 280px;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 100px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.cart-aside h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#cart-items {
+  list-style-type: none;
+  padding: 0;
+}
+
+#cart-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+#cart-items li:hover {
+  background-color: #e0e0e0;
+}
+
+.remove-item {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.remove-item:hover {
+  background-color: #c41829;
+}
+
+#cart-total {
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: right;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
 }
 
 .modal {
@@ -323,13 +424,14 @@ button:hover {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .close:hover,
 .close:focus {
   color: #000;
   text-decoration: none;
-  cursor: pointer;
+  transform: rotate(90deg);
 }
 
 #content-iframe {
@@ -340,6 +442,7 @@ button:hover {
 
 #whatsapp-button {
   background-color: #25D366;
+  width: 100%;
 }
 
 #whatsapp-button:hover {
@@ -347,16 +450,19 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-  .products {
-    grid-template-columns: 1fr;
+  .content-wrapper {
+    flex-direction: column;
   }
-  
-  .product-images img {
-    width: calc(33.33% - 0.67rem);
+
+  .cart-aside {
+    width: 100%;
+    margin-top: 2rem;
+    position: static;
+    height: auto;
   }
-  
-  .logo span {
-    font-size: 1.2rem;
+
+  main {
+    margin-right: 0;
   }
 }
 
@@ -365,8 +471,10 @@ button:hover {
   to { opacity: 1; }
 }
 
-.product {
-  animation: fadeIn 0.5s ease-out;
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 .notification {
@@ -397,58 +505,30 @@ button:hover {
   100% { transform: scale(1); }
 }
 
-#cart-items li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.remove-item {
-  margin-left: 10px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  flex-shrink: 0;
-}
-
-.remove-item:hover {
-  background-color: #c41829;
-}
-
-#content-message {
-  display: none;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  text-align: center;
-}
-
-#content-message p {
-  margin-bottom: 15px;
-}
-
-#content-message a {
-  display: inline-block;
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   background-color: var(--primary-color);
   color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#content-message a:hover {
+.scroll-to-top.show {
+  opacity: 1;
+}
+
+.scroll-to-top:hover {
   background-color: var(--secondary-color);
-}
-
-#cart-total {
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: right;
+  transform: translateY(-3px);
 }

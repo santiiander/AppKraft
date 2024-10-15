@@ -3,15 +3,9 @@ let cart = [];
 document.addEventListener('DOMContentLoaded', () => {
     const cartIcon = document.querySelector('.cart-icon');
     const cartCount = document.getElementById('cart-count');
-    const cartModal = document.getElementById('cart-modal');
-    const contentModal = document.getElementById('content-modal');
     const whatsappButton = document.getElementById('whatsapp-button');
     const countrySelect = document.getElementById('country-select');
     const closeButtons = document.querySelectorAll('.close');
-
-    cartIcon.addEventListener('click', () => {
-        openModal(cartModal);
-    });
 
     closeButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -67,25 +61,61 @@ function displayProducts(products) {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = products.map((product, index) => `
         <div class="product megapack">
-            <h2>${product.Nombrepack}</h2>
-            <div class="product-images">
-                ${[1, 2, 3, 4, 5].map(num => `
-                    <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" 
-                         onerror="this.src='/placeholder.svg?height=120&width=120&text=Image Not Found';">
-                `).join('')}
+            <div class="product-content">
+                <h2>${product.Nombrepack}</h2>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        ${Array.from({ length: 15 }, (_, i) => i + 1).map(num => `
+                            <div class="swiper-slide">
+                                <img src="Packs/MegaPack${index + 1}/${num}.jpg" alt="Figura Origami ${num}" 
+                                     onerror="this.src='/placeholder.svg?height=300&width=300&text=Image Not Found';">
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <p>${product.DescirpcionPack}</p>
+                <div class="price">
+                    Precio: <span class="amount pe">${product.PrecioPE}</span> <span class="currency pe">PEN</span>
+                    <span class="amount usd">${product.PrecioUSD}</span> <span class="currency usd">USD</span>
+                </div>
             </div>
-            <p>${product.DescirpcionPack}</p>
-            <div class="price">
-                Precio: <span class="amount pe">${product.PrecioPE}</span> <span class="currency pe">PEN</span>
-                <span class="amount usd">${product.PrecioUSD}</span> <span class="currency usd">USD</span>
+            <div class="product-buttons">
+                <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver todo el contenido del pack!</button>
+                <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al pedido</button>
             </div>
-            <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver todo el contenido del pack!</button>
-            <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al pedido</button>
         </div>
     `).join('');
 
+    initSwipers();
     attachEventListeners();
     updatePrices();
+}
+
+function initSwipers() {
+    const swipers = document.querySelectorAll('.mySwiper');
+    swipers.forEach(swiperElement => {
+        new Swiper(swiperElement, {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+            spaceBetween: 10,
+            loop: false,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    });
 }
 
 function attachEventListeners() {
@@ -96,11 +126,6 @@ function attachEventListeners() {
         button.addEventListener('click', () => {
             const product = JSON.parse(button.getAttribute('data-product'));
             addToCart(product);
-            
-            button.classList.add('added');
-            setTimeout(() => {
-                button.classList.remove('added');
-            }, 300);
         });
     });
 
@@ -126,17 +151,18 @@ function attachEventListeners() {
 function addToCart(product) {
     const existingItem = cart.find(item => item.Nombrepack === product.Nombrepack);
     if (existingItem) {
-        existingItem.quantity += 1;
+        showNotification(`${product.Nombrepack} ya está en el carrito!`);
     } else {
         cart.push({ ...product, quantity: 1 });
+        updateCartCount();
+        updateCartDisplay();
+        showNotification(`${product.Nombrepack} agregado al carrito!`);
     }
-    updateCartCount();
-    showNotification(`${product.Nombrepack} agregado al carrito!`);
 }
 
 function updateCartCount() {
     const cartCount = document.getElementById('cart-count');
-    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    cartCount.textContent = cart.length;
     
     cartCount.classList.add('pulse');
     setTimeout(() => {
@@ -157,12 +183,12 @@ function updateCartDisplay() {
         cart.forEach((item, index) => {
             const li = document.createElement('li');
             const price = document.getElementById('country-select').value === 'peru' ? item.PrecioPE : item.PrecioUSD;
-            const itemTotal = price * item.quantity;
-            total += itemTotal;
+            total += parseFloat(price);
 
             li.innerHTML = `
                 <div>
-                    ${item.Nombrepack} - Cantidad: ${item.quantity} - Precio: ${price} - Total: ${itemTotal.toFixed(2)}
+                    ${item.Nombrepack}<br>
+                    Precio: ${price}
                 </div>
                 <button class="remove-item" data-index="${index}">Eliminar</button>
             `;
@@ -197,9 +223,6 @@ function openModal(modal) {
     setTimeout(() => {
         modal.classList.add('show');
     }, 10);
-    if (modal === document.getElementById('cart-modal')) {
-        updateCartDisplay();
-    }
 }
 
 function closeModal(modal) {
@@ -216,7 +239,7 @@ function closeModal(modal) {
 }
 
 function sendWhatsAppMessage() {
-    const message = encodeURIComponent(`Hola, me gustaría consultar sobre los siguientes productos: ${cart.map(item => `${item.Nombrepack} (x${item.quantity})`).join(', ')}`);
+    const message = encodeURIComponent(`Hola, me gustaría consultar sobre los siguientes productos: ${cart.map(item => item.Nombrepack).join(', ')}`);
     window.open(`https://wa.me/51908642311?text=${message}`, '_blank');
 }
 
