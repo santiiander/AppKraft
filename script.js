@@ -265,7 +265,7 @@ function showNotification(message) {
         }, 300);
     }, 3000);
 }
-
+ //comentario test
 function updatePrices() {
     const country = document.getElementById('country-select').value;
     const priceElements = document.querySelectorAll('.price');
