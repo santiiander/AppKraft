@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 1; i <= 18; i++) {
         const img = document.createElement('img');
         img.src = `Testimonios/Testimonio${i}.jpg`;
+            onerror=this.onerror=null;this.src=`Testimonios/Testimonio${i}.png`;
         img.alt = `Testimonio ${i}`;
         img.onerror = () => {
             img.src = '/placeholder.svg?height=200&width=200&text=Imagen no encontrada';
