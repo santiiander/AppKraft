@@ -269,21 +269,26 @@ function closeModal(modal) {
 }
 
 function sendWhatsAppMessage() {
-    let message = "¡Hola! Tengo un carrito con el pedido\n\n";
+    let message = `¡Hola! Tengo un carrito 🛒 con el pedido 🤗\n\n`;
     let total = 0;
     const currency = document.getElementById('country-select').value === 'peru' ? 'PEN' : 'USD';
 
     cart.forEach(item => {
         const price = currency === 'PEN' ? parseFloat(item.PrecioPE) : parseFloat(item.PrecioUSD);
-        message += `⭐ ${item.Nombrepack}\n`;
+        message += `📦 ${item.Nombrepack}:\n`;
+        message += `            Precio Oferta 😱 ${currency === 'PEN' ? 's/. ' : '$ '} ${price.toFixed(2)}\n`;
         total += price;
     });
 
-    message += `\ncon un precio total de ${total.toFixed(2)} ${currency}`;
+    message += `\ncon un precio total de ${currency === 'PEN' ? 's/. ' : '$ '} ${total.toFixed(2)}\n`;
+    message += `me gustaría saber más detalles sobre mi carrito y medios de pago!`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/51908642311?text=${encodedMessage}`, '_blank');
 }
+
+
+
 
 function showNotification(message) {
     const notification = document.createElement('div');
