@@ -10,22 +10,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
 <body>
-    
     <header>
         <nav>
             <div class="logo">
                 <img src="Resources/Logo.png" alt="LogoTienda" class="logo-img">
                 <span>Diseños En PapelKraft</span>
             </div>
-            <a href="wip.html" class="nav-link">Testimonios</a> 
-            <!-- Modificar arrba wip por proyectos.html en su momento -->
-            <a href="testimonios.html" class="nav-link">Proyectos de clientes</a>
+            <div class="nav-links">
+                <a href="wip.html" class="nav-link">Testimonios</a>
+                <a href="testimonios.html" class="nav-link">Proyectos de clientes</a>
+            </div>
             <div class="header-right">
                 <select id="country-select">
                     <option value="peru">🇵🇪 Perú</option>
                     <option value="extranjero">🌎 Extranjero</option>
                 </select>
-                <div class="cart-icon">
+                <div class="cart-icon" id="cart-toggle">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span id="cart-count">0</span>
                 </div>
@@ -69,6 +69,7 @@
         </main>
 
         <aside id="cart-aside" class="cart-aside">
+            <button id="close-cart" class="close-cart">&times;</button>
             <h2>Tu Carrito</h2>
             <ul id="cart-items"></ul>
             <div id="cart-total"></div>

@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const whatsappButton = document.getElementById('whatsapp-button');
     const countrySelect = document.getElementById('country-select');
     const closeButtons = document.querySelectorAll('.close');
+    const cartAside = document.getElementById('cart-aside');
+    const cartToggle = document.getElementById('cart-toggle');
+    const closeCartButton = document.getElementById('close-cart');
 
     closeButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -25,6 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     countrySelect.addEventListener('change', updatePrices);
+
+    cartToggle.addEventListener('click', toggleCart);
+    closeCartButton.addEventListener('click', closeCart);
+
+    // Close cart when clicking outside of it (mobile only)
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768) {
+            const isClickInside = cartAside.contains(event.target) || cartToggle.contains(event.target);
+            if (!isClickInside && cartAside.classList.contains('show')) {
+                closeCart();
+            }
+        }
+    });
+
+    // Update cart display when window is resized
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            cartAside.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+    });
 
     loadProductsFromGoogleSheet();
 });
@@ -187,7 +211,8 @@ function updateCartDisplay() {
     } else {
         cart.forEach((item, index) => {
             const li = document.createElement('li');
-            const price = document.getElementById('country-select').value === 'peru' ? item.PrecioPE : item.PrecioUSD;
+            const price = document.getElementById('country-select').value ===
+            'peru' ? item.PrecioPE : item.PrecioUSD;
             total += parseFloat(price);
 
             li.innerHTML = `
@@ -298,7 +323,23 @@ function updatePrices() {
     updateCartDisplay();
 }
 
-// Botón de scroll
+function toggleCart() {
+    const cartAside = document.getElementById('cart-aside');
+    cartAside.classList.toggle('show');
+    if (cartAside.classList.contains('show')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function closeCart() {
+    const cartAside = document.getElementById('cart-aside');
+    cartAside.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+// Scroll to top functionality
 const scrollToTopButton = document.getElementById("scroll-to-top");
 
 window.onscroll = function() {

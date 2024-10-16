@@ -153,7 +153,7 @@ h1:hover::after {
 }
 
 .info-container {
-  background-color: #f0f0f0;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -175,6 +175,7 @@ h1:hover::after {
   margin: 1rem 0;
   position: relative;
   overflow: hidden;
+  animation: pulse 2s infinite;
 }
 
 .offer::before {
@@ -195,6 +196,18 @@ h1:hover::after {
   }
   100% {
     transform: translateX(100%) rotate(45deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -229,15 +242,9 @@ h1:hover::after {
   color: var(--accent-color);
 }
 
-.rating {
-  font-size: 1.5rem;
-  color: gold;
-  margin-bottom: 1rem;
-}
-
 .swiper {
   width: 100%;
-  height: auto;
+  height: 155px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -255,6 +262,7 @@ h1:hover::after {
   height: 100%;
   object-fit: cover;
   aspect-ratio: 1;
+  border-radius: 10px;
 }
 
 .swiper-button-next,
@@ -346,6 +354,18 @@ button:hover {
   overflow-y: auto;
 }
 
+.close-cart {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color:  var(--text-color);
+}
+
 .cart-aside h2 {
   color: var(--primary-color);
   margin-bottom: 1rem;
@@ -404,7 +424,7 @@ button:hover {
   left: 0;
   top: 0;
   width: 100%;
-  height:  100%;
+  height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
   opacity: 0;
@@ -465,34 +485,6 @@ button:hover {
   background-color: #20BD5A;
 }
 
-@media (max-width: 768px) {
-  .content-wrapper {
-    flex-direction: column;
-  }
-
-  .cart-aside {
-    width: 100%;
-    margin-top: 2rem;
-    position: static;
-    height: auto;
-  }
-
-  main {
-    margin-right: 0;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
 .notification {
   position: fixed;
   bottom: 20px;
@@ -515,12 +507,6 @@ button:hover {
   animation: pulse 0.3s ease-in-out;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
 .scroll-to-top {
   position: fixed;
   bottom: 20px;
@@ -538,6 +524,10 @@ button:hover {
   opacity: 0;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  border: none;
+  outline: none;
+  padding: 15px;
 }
 
 .scroll-to-top.show {
@@ -548,40 +538,6 @@ button:hover {
   background-color: var(--secondary-color);
   transform: translateY(-3px);
 }
-
-.swiper {
-  width: 100%;
-  height: 155px;  
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.swiper-slide {
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  aspect-ratio: 1;
-  border-radius: 10px;
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--primary-color);
-  
-}
-
-.swiper-pagination-bullet-active {
-  background-color: var(--primary-color);
-}
-
 
 .product-buttons {
   display: flex;
@@ -602,16 +558,6 @@ button:hover {
   margin-right: 0;
 }
 
-@media (max-width: 480px) {
-  .product-buttons {
-      flex-direction: column;
-  }
-
-  .product-buttons button {
-      margin: 0.5rem 0;
-  }
-}
-
 .nav-link {
   color: white;
   text-decoration: none;
@@ -624,76 +570,107 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.image-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.image-gallery img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.image-gallery img:hover {
-  transform: scale(1.05);
-}
-/* 
-asdasdd */
-
-/* Añade esto al final de tu archivo CSS existente */
-
-.scroll-to-top {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 99;
-  border: none;
-  outline: none;
-  background-color: var(--primary-color);
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 50%;
-  font-size: 18px;
-  transition: all 0.3s ease;
-}
-
-.scroll-to-top:hover {
-  background-color: var(--secondary-color);
-}
-
-.product {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.info-container {
-  background: linear-gradient(145deg, #f0f0f0, #ffffff);
-}
-
-.offer {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-      transform: scale(1);
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
   }
-  50% {
-      transform: scale(1.05);
+
+  .logo {
+    margin-bottom: 1rem;
   }
-  100% {
-      transform: scale(1);
+
+  .nav-links {
+    margin-bottom: 1rem;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  main {
+    margin-right: 0;
+  }
+
+  .cart-aside {
+    width: 90%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: 60%;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .cart-aside.show {
+    transform: translateY(0);
+  }
+
+  .close-cart {
+    display: block;
+  }
+
+  #cart-toggle {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
   }
 }
 
+@media (max-width: 480px) {
+  .product {
+    padding: 1rem;
+  }
+
+  .swiper {
+    height: 120px;
+  }
+
+  .product h2 {
+    font-size: 1.2rem;
+  }
+
+  .price {
+    font-size: 1rem;
+  }
+
+  .product-buttons {
+    flex-direction: column;
+  }
+
+  .product-buttons button {
+    margin: 0.5rem 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
