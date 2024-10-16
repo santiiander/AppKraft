@@ -4,18 +4,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalImage = document.getElementById('modal-image');
     const closeButton = document.querySelector('.close-button');
     
-    // Load images
-    for (let i = 1; i <= 18; i++) {
-        const img = document.createElement('img');
-        img.src = `Testimonios/Testimonio${i}.jpg`;
-            onerror=this.onerror=null;this.src=`Testimonios/Testimonio${i}.png`;
-        img.alt = `Testimonio ${i}`;
-        img.onerror = () => {
-            img.src = '/placeholder.svg?height=200&width=200&text=Imagen no encontrada';
-        };
-        img.addEventListener('click', () => openModal(img.src));
-        container.appendChild(img);
+    // Function to load images
+    function loadImages() {
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        let loadedImages = 0;
+        const totalImagesToTry = 100; // Ajusta este número según la cantidad máxima de imágenes que esperas tener
+
+        for (let i = 1; i <= totalImagesToTry; i++) {
+            imageExtensions.forEach(ext => {
+                const img = new Image();
+                img.src = `Testimonios/Testimonio${i}.${ext}`;
+                img.alt = `Testimonio ${i}`;
+                img.loading = 'lazy'; // Add lazy loading for better performance
+
+                img.onload = () => {
+                    loadedImages++;
+                    img.addEventListener('click', () => openModal(img.src));
+                    container.appendChild(img);
+                };
+
+                img.onerror = () => {
+                    if (ext === imageExtensions[imageExtensions.length - 1]) {
+                        // Si hemos probado todas las extensiones y ninguna funcionó, no hacemos nada
+                    }
+                };
+            });
+        }
+
+        // Mostrar un mensaje si no se cargaron imágenes
+        setTimeout(() => {
+            if (loadedImages === 0) {
+                container.innerHTML = '<p>No se encontraron imágenes. Por favor, verifica la carpeta "Testimonios".</p>';
+            }
+        }, 5000); // Espera 5 segundos antes de mostrar el mensaje de error
     }
+
+    // Load images
+    loadImages();
 
     // Open modal
     function openModal(imageSrc) {

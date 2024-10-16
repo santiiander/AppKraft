@@ -644,3 +644,56 @@ button:hover {
 }
 /* 
 asdasdd */
+
+/* Añade esto al final de tu archivo CSS existente */
+
+.scroll-to-top {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top:hover {
+  background-color: var(--secondary-color);
+}
+
+.product {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.info-container {
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+}
+
+.offer {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.05);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+

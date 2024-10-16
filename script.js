@@ -287,4 +287,40 @@ function updatePrices() {
     updateCartDisplay();
 }
 
-//update
+
+function sendWhatsAppMessage() {
+    let message = "¡Hola! Tengo un carrito con el siguiente pedido:\n\n";
+    let total = 0;
+    const currency = document.getElementById('country-select').value === 'peru' ? 'PEN' : 'USD';
+
+    cart.forEach(item => {
+        const price = currency === 'PEN' ? parseFloat(item.PrecioPE) : parseFloat(item.PrecioUSD);
+        message += `⭐ ${item.Nombrepack} - ${price.toFixed(2)} ${currency}\n`;
+        total += price;
+    });
+
+    message += `\nPrecio total: ${total.toFixed(2)} ${currency}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/51908642311?text=${encodedMessage}`, '_blank');
+}
+
+// Botón de scroll
+const scrollToTopButton = document.getElementById("scroll-to-top");
+
+window.onscroll = function() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopButton.style.display = "block";
+    } else {
+        scrollToTopButton.style.display = "none";
+    }
+};
+
+scrollToTopButton.addEventListener("click", function() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
