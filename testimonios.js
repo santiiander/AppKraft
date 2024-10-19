@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('.close-button');
     
     // Load images
-    for (let i = 1; i <= 28; i++) {
+    for (let i = 1; i <= 50; i++) {
         const img = document.createElement('img');
         img.src = `Testimonios/Testimonio${i}.jpg`;
             onerror=this.onerror=null;this.src=`Testimonios/Testimonio${i}.png`;
