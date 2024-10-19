@@ -104,7 +104,7 @@ function displayProducts(products) {
                 </div>
                 <p>${product.DescirpcionPack}</p>
                 <div class="price">
-                    Precio: <span class="amount pe">${product.PrecioPE}</span> <span class="currency pe">PEN</span>
+                    Precio: <span class="amount pe">${product.PrecioPE}</span> <span class="currency pe">S/.</span>
                     <span class="amount usd">${product.PrecioUSD}</span> <span class="currency usd">USD</span>
                 </div>
             </div>
@@ -225,7 +225,7 @@ function updateCartDisplay() {
             cartItems.appendChild(li);
         });
 
-        cartTotal.textContent = `Total del carrito: ${total.toFixed(2)} ${document.getElementById('country-select').value === 'peru' ? 'PEN' : 'USD'}`;
+        cartTotal.textContent = `Total del carrito: ${total.toFixed(2)} ${document.getElementById('country-select').value === 'peru' ? 'Soles' : 'Dolares'}`;
     }
 
     attachRemoveItemListeners();
