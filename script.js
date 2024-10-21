@@ -104,8 +104,13 @@ function displayProducts(products) {
                 </div>
                 <p>${product.DescirpcionPack}</p>
                 <div class="price">
-                    Precio: <span class="amount pe">${product.PrecioPE}</span> <span class="currency pe">S/.</span>
-                    <span class="amount usd">${product.PrecioUSD}</span> <span class="currency usd">USD</span>
+                    Precio: 
+                    <span class="price-container">
+                        <span class="amount pe"></span>
+                        <span class="currency pe">${product.PrecioPE} S/.</span>
+                        <span class="amount usd"></span>
+                        <span class="currency usd">${product.PrecioUSD} USD</span>
+                    </span>
                 </div>
             </div>
             <div class="product-buttons">
@@ -118,6 +123,30 @@ function displayProducts(products) {
     initSwipers();
     attachEventListeners();
     updatePrices();
+}
+
+function initImagePopup() {
+    const swiperSlides = document.querySelectorAll('.swiper-slide img');
+    const popup = document.getElementById('image-popup');
+    const popupImage = document.getElementById('popup-image');
+    const closePopup = document.querySelector('.close-popup');
+
+    swiperSlides.forEach(img => {
+        img.addEventListener('click', () => {
+            popup.style.display = 'flex';
+            popupImage.src = img.src;
+        });
+    });
+
+    closePopup.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
 }
 
 function initSwipers() {
@@ -145,8 +174,10 @@ function initSwipers() {
             cssMode: true,
         });
     });
+    
+    // Call initImagePopup after initializing Swiper
+    initImagePopup();
 }
-
 function attachEventListeners() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     const viewContentButtons = document.querySelectorAll('.view-content');
@@ -361,3 +392,4 @@ scrollToTopButton.addEventListener("click", function() {
         behavior: "smooth"
     });
 });
+
