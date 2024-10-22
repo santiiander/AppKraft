@@ -114,7 +114,7 @@ function displayProducts(products) {
                 </div>
             </div>
             <div class="product-buttons">
-                <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver todo el contenido del pack!</button>
+                <button class="view-content" data-drive-link="${product.LinkGoogleDrive}">Ver Catalogo!</button>
                 <button class="add-to-cart" data-product='${JSON.stringify(product)}'>Agregar al carrito</button>
             </div>
         </div>
@@ -197,7 +197,7 @@ function attachEventListeners() {
             
             contentIframe.style.display = 'none';
             messageDiv.innerHTML = `
-                <p>Para ver el contenido completo del pack, por favor haga clic en el siguiente enlace:</p>
+                <p>Para Ver El Catalogo completo del pack, por favor haga clic en el siguiente enlace:</p>
                 <a href="${driveLink}" target="_blank" rel="noopener noreferrer">Ver contenido en Google Drive</a>
                 <p>Si el enlace no funciona, por favor contáctenos para obtener acceso.</p>
             `;
